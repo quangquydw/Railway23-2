@@ -41,7 +41,7 @@ CREATE TABLE type_question(
 	type_id			INT,
     type_name		ENUM('Essay', 'Multiple-Choice')
 );   
-CREATE TABLE category_question(questionquestion
+CREATE TABLE category_question(
 	category_id			INT,
     category_name		VARCHAR(50)
 );
