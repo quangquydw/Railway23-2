@@ -175,7 +175,8 @@ DROP TABLE IF EXISTS `exam_question`;
 CREATE TABLE `exam_question`(
 	exam_id			TINYINT NOT NULL,
     question_id		TINYINT NOT NULL,
-		FOREIGN KEY(exam_id) REFERENCES `exam`(exam_id),
+		PRIMARY KEY(exam_id, question_id),
+        FOREIGN KEY(exam_id) REFERENCES `exam`(exam_id),
         FOREIGN KEY(question_id) REFERENCES `question`(question_id)
 );
 SELECT * FROM `exam_question`;
@@ -214,4 +215,14 @@ WHERE create_date <'2019-12-20';
 -- Question 7: Lấy ra ID của question có >= 4 câu trả lời
 
 
+-- Question 11: Lấy ra nhân viên có tên bắt đầu bằng chữ "D" và kết thúc bằng chữ "o"
 
+SELECT full_name
+FROM `account`
+WHERE full_name LIKE 'D%o';
+
+-- Question 12: Xóa tất cả các exam được tạo trước ngày 20/12/2019--
+
+SELECT *
+FROM exam;
+DELETE 
