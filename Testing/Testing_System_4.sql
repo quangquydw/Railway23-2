@@ -187,70 +187,36 @@ INSERT INTO `exam_question`(exam_id, question_id)
 SELECT * FROM `exam_question`;
 
 
+-- Question 1: Viết lệnh để lấy ra danh sách nhân viên và thông tin phòng ban của họ
+SELECT ac.email, ac.user_name, ac.full_name, d.department_name
+FROM `account` AS ac
+JOIN `department`AS d ON ac.department_id = d.department_id;
 
--- Question 2: Lấy ra tất cả các phòng ban
-
-SELECT *
-FROM department;
--- Question 3: Lấy ra id của phòng ban Sale
-
-SELECT department_id FROM `department`
-	WHERE department_name = 'Sale';
-
-
--- Question 4: Lấy thông tin account có full name dài nhất
-
+-- Question 2: Viết lệnh để lấy ra thông tin các account được tạo sau ngày 20/12/2010
 SELECT *
 FROM `account`
-WHERE length(full_name) = 
-	(SELECT MAX(LENGTH(full_name))
-		FROM `account`);
-        
--- Question 5: Lấy ra thông tin account có full name dài nhất và thuộc phòng ban có id = 3
-SELECT * FROM `account`
-WHERE length(full_name) = (SELECT MAX(length(full_name))
-							FROM `account`) AND department_id = 3;
+WHERE create_date <('2020-12-20');
 
--- Question 6: Lấy ra group đã tham gia trước ngày 20/12/2019
+-- Question 3: Viết lệnh để lấy ra tất cả các developer
+SELECT ac.email, ac.user_name, ac.full_name, p.position_name
+FROM `account` ac
+JOIN `position` p ON ac.position = p.position_id
+WHERE p.position_name = 'Dev';
 
-SELECT group_name, create_date
-FROM `group`
-WHERE create_date <'2019-12-20';
-        
--- Question 7: Lấy ra ID của question có >= 4 câu trả lời
+-- Question 4: Viết lệnh để lấy ra danh sách các phòng ban có >3 nhân viên
+SELECT 
+	department_name AS phong_ban, COUNT(ac.department_id) AS nhan_vien
+FROM 
+	`department` AS de
+JOIN `account` AS ac ON de.department_id = ac.department_id
+GROUP BY department_name
+HAVING COUNT(ac.department_id) > 3;
+
+-- Question 5: Viết lệnh để lấy ra danh sách câu hỏi được sử dụng trong đề thi nhiều nhất
+	
 
 
--- Question 11: Lấy ra nhân viên có tên bắt đầu bằng chữ "D" và kết thúc bằng chữ "o"
 
-SELECT full_name
-FROM `account`
-WHERE full_name LIKE 'D%o';
 
--- Question 12: Xóa tất cả các exam được tạo trước ngày 20/12/2019
-
-SELECT *
-FROM `exam`;
-SELECT *
-FROM `exam_question`;
-DELETE
-FROM `exam`
-WHERE create_date <'2019-12-20';
-
--- Question 13: Xóa tất cả các question có nội dung bắt đầu bằng từ "câu hỏi"
-
-SELECT *
-FROM `question`;
-DELETE
-FROM
-
--- Question 14: Update thông tin của account có id = 5 thành tên "Nguyễn Bá Lộc" và
-SELECT *
-FROM `account`;
-
--- Question 15: update account có id = 5 sẽ thuộc group có id = 4
-UPDATE `group_account`
-SET group_id = 4
-WHERE account_id = 5;
-SELECT * FROM group_account;
 
 
