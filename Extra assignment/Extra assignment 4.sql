@@ -66,26 +66,28 @@ CREATE TABLE `employee_skill`(
 SELECT * FROM `employee_skill`; 
 
 -- Question 3: Viết lệnh để lấy ra danh sách nhân viên (name) có skill Java
-SELECT *
-FROM `employee`
-WHERE employee_name
-
-UNION
-
-SELECT 	*
-FROM 	`employee_skill`
-WHERE 	skill_code = 'JAVA';
+SELECT e.employee_name 
+FROM `employee` e
+JOIN employee_skill es ON e.employee_number = es.employee_number
+WHERE es.skill_code = 'JAVA';
 
 -- Question 4: Viết lệnh để lấy ra danh sách các phòng ban có >3 nhân viên
 
-SELECT *
-FROM `department`
-WHERE department_name
-
-UNION
-
-SELECT *
-FROM `employee`
-WHERE employee_name
+SELECT d.*, COUNT(e.department_number) 'Số nhân viên'
+FROM `employee` e
+JOIN `department` d ON e.department_number = d.department_number
+GROUP BY e.department_number 
+HAVING COUNT(e.department_number) > 3;
 
 -- Question 5: Viết lệnh để lấy ra danh sách câu hỏi được sử dụng trong đề thi nhiều nhất
+
+SELECT d.department_name, GROUP_CONCAT(e.employee_name)
+FROM `department` d
+LEFT JOIN `employee` e ON e.department_number = d.department_number
+GROUP BY d.department_number;
+-- Question 6: Viết lệnh để lấy ra danh sách nhân viên có > 1 skills.
+SELECT e.*, COUNT(es.employee_number) 
+FROM employee e
+JOIN employee_skill es ON e.employee_number = es.employee_number
+GROUP BY es.employee_number
+HAVING COUNT(es.employee_number) > 1;
